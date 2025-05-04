@@ -29,12 +29,18 @@ if submit:
     sheet.append_row([timestamp, mood, note])
     st.success("Mood entered. Thank you!")
 
-df = pd.DataFrame(sheet.get_all_records())
+@st.cache_data(ttl=60)
+def load_data():
+    records = sheet.get_all_records()
+    return pd.DataFrame(records)
+
+df = load_data()
 
 if not df.empty:
     today = datetime.now().strftime("%Y-%m-%d")
     df['Timestamp'] = pd.to_datetime(df['Timestamp'])
     df_today = df[df['Timestamp'].dt.strftime('%Y-%m-%d') == today]
-    fig = px.bar(df_today['Mood'].value_counts().reset_index(), x='index', y='Mood',
-                 labels={'index': 'Mood', 'Mood': 'Count'}, title="Today's Mood Distribution")
-    st.plotly_chart(fig)
+    mood_counts = df_today['Mood'].value_counts().reset_index()
+    mood_counts.columns = ['Mood', 'Count']
+    fig = px.bar(mood_counts, x="Mood", y="Count", color="Mood", title="Mood Distribution")
+    st.plotly_chart(fig, use_container_width=True)
