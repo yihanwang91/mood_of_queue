@@ -21,7 +21,7 @@ st.title("Mood of the Queue")
 
 mood = st.selectbox("Select your mood", ["Happy 😊", "Angry 😠", "Sad 😕", "Excited 🎉"])
 note = st.text_input("Add a note (optional)")
-submit = st.button("Enter your mood")
+submit = st.form_submit_button("Enter your mood")
 
 if submit:
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
