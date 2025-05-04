@@ -8,6 +8,6 @@ What it does:
 - Mood frequency is visualized in a bar chart.
 
 File structure:
-├── app.py
-├── requirements.txt
-└── README.md
+- app.py
+- requirements.txt
+- README.md
