@@ -42,5 +42,5 @@ if not df.empty:
     df_today = df[df['Timestamp'].dt.strftime('%Y-%m-%d') == today]
     mood_counts = df_today['Mood'].value_counts().reset_index()
     mood_counts.columns = ['Mood', 'Count']
-    fig = px.bar(mood_counts, x="Mood", y="Count", color="Mood", title="Mood Distribution")
+    fig = px.bar(mood_counts, x="Mood", y="Count", color="Mood", title="Mood Distribution for Today")
     st.plotly_chart(fig, use_container_width=True)
