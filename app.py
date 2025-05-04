@@ -2,13 +2,14 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import gspread
+import json
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
-client = gspread.authorize(credentials)
-sheet = client.open("Mood of the Queue").sheet1
+creds_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
+credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+sheet = client.open_by_key(st.secrets["1IGgLpcOg2WhMdKngtJ19uMJElqpBcRQtD7D2VcTBrr8"]).sheet1
 
 st.title("Mood of the Queue")
 
