@@ -34,7 +34,7 @@ def load_data(sheet):
     records = sheet.get_all_records()
     return pd.DataFrame(records)
 
-data = load_data(sheet)
+df = load_data(sheet)
 
 if not df.empty:
     today = datetime.now().strftime("%Y-%m-%d")
