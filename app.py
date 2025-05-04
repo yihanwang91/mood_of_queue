@@ -29,12 +29,7 @@ if submit:
     sheet.append_row([timestamp, mood, note])
     st.success("Mood entered. Thank you!")
 
-@st.cache_data(ttl=60)
-def load_data(sheet):
-    records = sheet.get_all_records()
-    return pd.DataFrame(records)
-
-df = load_data(sheet)
+df = pd.DataFrame(sheet.get_all_records())
 
 if not df.empty:
     today = datetime.now().strftime("%Y-%m-%d")
