@@ -9,6 +9,7 @@ from datetime import datetime
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
 credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+client = gspread.authorize(credentials)
 sheet = client.open_by_key(st.secrets["1IGgLpcOg2WhMdKngtJ19uMJElqpBcRQtD7D2VcTBrr8"]).sheet1
 
 st.title("Mood of the Queue")
