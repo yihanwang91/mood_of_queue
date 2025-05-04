@@ -6,11 +6,16 @@ import json
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
-credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
-client = gspread.authorize(credentials)
-sheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"]).sheet1
+@st.cache_resource
+def get_gspread_sheet():
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+    client = gspread.authorize(credentials)
+    sheet = client.open_by_key(st.secrets["GOOGLE_SHEET_ID"]).sheet1
+    return sheet
+
+sheet = get_gspread_sheet()
 
 st.title("Mood of the Queue")
 
