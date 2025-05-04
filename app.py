@@ -17,6 +17,11 @@ def get_gspread_sheet():
 
 sheet = get_gspread_sheet()
 
+@st.cache_data(ttl=60)
+def load_data():
+    records = sheet.get_all_records()
+    return pd.DataFrame(records)
+
 st.title("Mood of the Queue")
 
 with st.form("mood_form"):
@@ -28,11 +33,6 @@ if submit:
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     sheet.append_row([timestamp, mood, note])
     st.success("Mood entered. Thank you!")
-
-@st.cache_data(ttl=60)
-def load_data():
-    records = sheet.get_all_records()
-    return pd.DataFrame(records)
 
 df = load_data()
 
